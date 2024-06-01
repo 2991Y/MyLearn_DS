@@ -1,6 +1,5 @@
 pub mod queue{
 
-
     #[derive(Debug)]
     pub struct Queue<T>{
         cap:usize,
@@ -147,6 +146,7 @@ pub mod queue{
         head:Link<T>,
     }
     
+    #[derive(Debug)]
     struct Node<T>{
         elem:T,
         next:Link<T>,
@@ -186,6 +186,10 @@ pub mod queue{
 
         pub fn peek(&self)->Option<&T>{
             self.head.as_ref().map(|n|&n.elem)
+        }
+
+        pub fn peek_mut(&mut self)->Option<&mut T>{
+            self.head.as_deref_mut().map(|n|&mut n.elem)
         }
 
         pub fn into_iter(self)->IntoIter<T>{
@@ -241,6 +245,58 @@ pub mod queue{
             while let Some(mut node) = link {
                 link = node.next.take();
             }
+        }
+    }
+
+
+    impl<T> Node<T>{
+        fn new(data:T)->Self{
+            Node{elem:data, next:None}
+        }
+    }
+
+    #[derive(Debug)]
+    pub struct Stack<T>{
+        size:usize,
+        top:Link<T>,
+    }
+
+    impl<T:Clone> Stack<T>{
+       pub fn new()->Self{
+        Stack{size:0,top:None}
+        }
+
+        pub fn push(&mut self, val:T){
+            let mut node = Node::new(val);
+            node.next = self.top.take();
+            self.top = Some(Box::new(node));
+            self.size +=1;
+
+        }
+
+        pub fn pop(&mut self)->Option<T>{
+
+            self.top.take().map(|n|{
+                let node = *n;
+                self.top = node.next;
+                self.size -=1;
+                node.elem
+            })
+
+        }
+
+        pub fn peek(&self)->Option<&T>{
+            self.top.as_ref().map(|n|{
+                &n.elem
+            })
+        }
+
+        pub fn size(&self)->usize{
+            self.size
+        }
+
+        pub fn is_empty(&self)->bool{
+            0 == self.size
         }
     }
 }

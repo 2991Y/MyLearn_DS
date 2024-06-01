@@ -16,7 +16,15 @@ fn main() {
 
 
     // dequeue_run();
-    pal_check_run();
+    // pal_check_run();
+
+
+    link_run();
+    link_into_iter();
+    link_iter();
+    link_iter_mut();
+
+    link_stack_run();
 }
 
 #[allow(dead_code)]
@@ -151,4 +159,86 @@ fn pal_check_run(){
 
     let is_pal = pal_checker(pal);
     println!("{} 是否时回文？{}",pal,is_pal);
+}
+
+#[allow(dead_code)]
+fn link_run(){
+    let mut list = queue::List::new();
+    list.push(1);
+    list.push(2);
+    list.push(3);
+
+    assert_eq!(list.pop(),Some(3));
+    assert_eq!(list.peek(),Some(&2));
+    assert_eq!(list.peek_mut(),Some(&mut 2));
+
+    list.peek_mut().map(|val|{
+        *val = 4;
+    });
+
+    assert_eq!(list.peek(),Some(&4));
+
+    println!("link run is ok.");
+}
+
+#[allow(dead_code)]
+fn link_into_iter(){
+    let mut list = queue::List::new();
+    list.push(1);
+    list.push(2);
+    list.push(3);
+
+    let mut iter = list.into_iter();
+    assert_eq!(iter.next(), Some(3));
+    assert_eq!(iter.next(), Some(2));
+    assert_eq!(iter.next(), Some(1));
+    assert_eq!(iter.next(), None);
+    assert_eq!(iter.next(), None);
+
+    println!("into_iter is ok.");
+}
+
+#[allow(dead_code)]
+fn link_iter(){
+    let mut list = queue::List::new();
+    list.push(1);
+    list.push(2);
+    list.push(3);
+
+    let mut iter = list.iter();
+    assert_eq!(iter.next(), Some(&3));
+    assert_eq!(iter.next(), Some(&2));
+    assert_eq!(iter.next(), Some(&1));
+    assert_eq!(iter.next(), None);
+    assert_eq!(iter.next(), None);
+    println!("iter is ok.");
+}
+#[allow(dead_code)]
+fn link_iter_mut(){
+    let mut list = queue::List::new();
+    list.push(1);
+    list.push(2);
+    list.push(3);
+
+    let mut iter = list.iter_mut();
+    assert_eq!(iter.next(), Some(&mut 3));
+    assert_eq!(iter.next(), Some(&mut 2));
+    assert_eq!(iter.next(), Some(&mut 1));
+    assert_eq!(iter.next(), None);
+    assert_eq!(iter.next(), None);
+    println!("iter_mut is ok.");
+}
+
+#[allow(dead_code)]
+fn link_stack_run(){
+    let mut stack_linked = queue::Stack::new();
+
+    stack_linked.push(1);
+    stack_linked.push(2);
+    stack_linked.push(4);
+
+    println!("top:{:?} size:{}",stack_linked.peek().unwrap(),stack_linked.size());
+    println!("pop:{:?} size:{}",stack_linked.pop().unwrap(),stack_linked.size());
+    println!("is_empty:{:?} stack:{:?}",stack_linked.is_empty(),stack_linked);
+
 }
