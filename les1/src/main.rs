@@ -1,4 +1,4 @@
-use les1::{base_converter, divide_by_two, infix_to_postfix, par_checker1, postfix_eval, queue::queue::{self, pal_checker, Deque, Queue}, Stack};
+use les1::{base_converter, divide_by_two, infix_to_postfix, par_checker1, postfix_eval, queue::queue::{self, pal_checker, Deque, LVec, Queue}, Stack};
 fn main() {
     println!("Hello, line struct !");
 
@@ -19,12 +19,15 @@ fn main() {
     // pal_check_run();
 
 
-    link_run();
-    link_into_iter();
-    link_iter();
-    link_iter_mut();
+    // link_run();
+    // link_into_iter();
+    // link_iter();
+    // link_iter_mut();
 
-    link_stack_run();
+    // link_stack_run();
+
+
+    lvec_run();
 }
 
 #[allow(dead_code)]
@@ -241,4 +244,33 @@ fn link_stack_run(){
     println!("pop:{:?} size:{}",stack_linked.pop().unwrap(),stack_linked.size());
     println!("is_empty:{:?} stack:{:?}",stack_linked.is_empty(),stack_linked);
 
+}
+
+#[allow(dead_code)]
+fn lvec_run(){
+    let mut lvec = LVec::new();
+
+    lvec.push(10);
+    lvec.push(11);
+    lvec.push(12);
+    lvec.push(13);
+
+    lvec.insert(0,9);
+
+    let mut lvec2 = LVec::new();
+
+    lvec2.insert(0, 8);
+    lvec2.append(&mut lvec);
+
+    println!("lvec2 len:{}",lvec2.len());
+    lvec2.print_lvec();
+
+    let res1 = lvec2.pop();
+    let res2 = lvec2.remove(0);
+
+    println!("pop {:?}", res1.unwrap());
+    println!("remove {:?}", res2.unwrap());
+
+    lvec2.print_lvec();
+    
 }
