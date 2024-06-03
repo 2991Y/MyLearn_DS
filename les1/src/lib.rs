@@ -2,7 +2,7 @@ pub mod queue;
 /// stack
 #[derive(Debug)]
 pub struct Stack<T>{
-    top:usize,
+    top:usize, // 栈顶
     data:Vec<T>,
 }
 
@@ -31,7 +31,7 @@ impl<T> Stack<T>{
         if self.top == 0{
             return None;
         }else{
-           return self.data.get(self.top - 1);
+           return self.data.get(self.top - 1); // 通过栈顶访问 
         }
     }
 
@@ -145,7 +145,7 @@ pub fn infix_to_postfix(infix:&str)->Option<String>{
     prec.insert("*", 3);
     prec.insert("/", 3);
 
-    let mut op_stack = Stack::new();
+    let mut op_stack = Stack::new();// 操作栈
     let mut postfix=Vec::new();
 
     for token in infix.split_whitespace(){

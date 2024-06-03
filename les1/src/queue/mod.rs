@@ -20,7 +20,7 @@ pub mod queue{
             if self.size() == self.cap {
                 return Err("队列已满！".into());
             }
-            self.data.insert(0,val);
+            self.data.insert(0,val); // 头插
             Ok(())
         }
 
